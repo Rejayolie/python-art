@@ -1,9 +1,10 @@
 from PIL import Image
-import numpy as np
 import pprint
+import sys
 
 ASCII_CHARS = ['#', '?', ' ', '.', '=', '+', '.', '*', '3', '&', '@']
-fp = 'zeroToMasteryIcon.png'
+fp = sys.argv[1]
+# run the program in this format --- python ascii_image.py <your image file> ---
 
 
 # open image
@@ -13,9 +14,12 @@ def open_image(file_path):
 
 
 # resize the image
-def scale_image(image, new_width=50):
+# you can adjust the value of new_width. it's the width of your ascii image
+# you can increase it to have a better view and
+# you can decrease it to have a concise view
+def scale_image(image, new_width=100):
     original_height, original_width = image.size
-    aspect_ratio = int(original_height/original_width)
+    aspect_ratio = original_height//original_width
     new_height = aspect_ratio*new_width
     resized_image = image.resize((new_width, new_height))
     return resized_image
@@ -45,7 +49,7 @@ def map_pixels_to_ascii(image, range_width=25):
 
 # convert the whole image to ascii
 def image_to_ascii(image):
-    new_width = 50
+    new_width = 100
     image = scale_image(image)
     image = convert_to_greyscale(image)
     pixels_to_ascii_chars = map_pixels_to_ascii(image)
